@@ -1,0 +1,196 @@
+PROMPT 1 : 
+
+You are a senior prompt engineer and have been tasked with creating a well thought through prompt for a complex responsive weather checking app that is ready to be shipped - here are the instructions : Zadanie: Počasie App
+Popis úlohy
+Vytvor aplikáciu zobrazujúcu aktuálne počasie pre hľadané mesto pomocou verejného API s históriou hľadaní.
+Čo aplikácia robí
+Užívateľ zadá:
+
+* Názov mesta (textové pole, napr. "Bratislava", "London")
+* Tlačidlo Hľadaj alebo kláves Enter
+* Prepínač: °C / °F (toggle button)
+Aplikácia zobrazuje:
+
+* Karta s aktuálnym počasím:
+   * Názov mesta a krajiny
+   * Emoji ikona počasia (☀️ 🌧️ ❄️ 🌩️)
+   * Teplota vo vybranej jednotke
+   * Pocitová teplota
+   * Vlhkosť vzduchu (%)
+   * Rýchlosť vetra (km/h)
+   * Textový popis (Jasno / Oblačno / Dážď)
+* Sekcia "Posledné hľadania":
+   * Max. 5 miest ako klikateľné tagy
+   * Klik → znova vyhľadá mesto
+* Stavové hlásenia:
+   * Načítavam... (spinner)
+   * "Mesto sa nenašlo. Skús iný názov."
+   * "Nepodarilo sa načítať dáta. Skontroluj pripojenie."
+Požadované funkcie
+✅ Vyhľadanie mesta (tlačidlo aj Enter) ✅ Zobrazenie počasia cez Open-Meteo API (`fetch` + `async/await`) ✅ Prevod °C ↔ °F bez nového API volania ✅ Emoji ikona podľa WMO kódov počasia ✅ Loading indicator ✅ Ošetrenie chýb (mesto nenájdené, sieť) ✅ História 5 posledných miest (`localStorage`) ✅ Klik na históriu = nové vyhľadanie
+Technológie
+
+* HTML5: Vyhľadávacie pole, karty
+* CSS3: Karty s tieňom, emoji ikony, loading animácia
+* JavaScript (ES6+): `fetch()` API, `async/await`
+* Open-Meteo API: [Dokumentácia](https://open-meteo.com/) (bezplatné, bez registrácie)
+API endpoint príklad:
+Geocoding: https://geocoding-api.open-meteo.com/v1/search?name=Bratislava Počasie:   https://api.open-meteo.com/v1/forecast[?](https://api.open-meteo.com/v1/forecast?latitude=48.14&longitude=17.11&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code)  https://api.open-meteo.com/v1/forecast?latitude=48.14&longitude=17.11&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code truktúra súborov Dôležité:
+
+HTML súbor musí byť v koreňovom priečinku ako index.html
+CSS musí byť v assets/css/style.css
+JavaScript musí byť v assets/js/script.js
+Žiadne súbory priamo v koreňovom priečinku okrem index.html a README.md 📱 Responzívnosť
+Aplikácia MUSÍ byť responzívna (fungovať na mobile, tablete aj počítači):
+
+Použi media queries pre rôzne veľkosti obrazoviek
+Otestuj na minimálne 3 rozlíšeniach: mobil (375px), tablet (768px), desktop (1920px)
+Prvky sa musia správne zobrazovať a byť použiteľné na všetkých zariadeniach                                   
+Tvoj projekt MUSÍ dodržať túto štruktúru:
+
+```
+nazov-projektu/
+├── index.html          ← Hlavný HTML súbor
+├── assets/             ← Priečinok pre všetky zdroje
+│   ├── css/
+│   │   └── style.css   ← Všetky CSS štýly
+│   ├── js/
+│   │   └── script.js   ← Všetok JavaScript kód
+│   └── images/         ← Obrázky (ak potrebné)
+│       └── ...
+└── README.md           ← Popis projektu, 
+``` . And the site is to have all of the necessary file not just html (css, js ect) Style this app to match the following design exactly. 
+All values are taken from the reference design.
+
+---
+
+## BODY & BASE
+
+font-family: 'Inter', sans-serif
+background: #0a0f1e
+-webkit-font-smoothing: antialiased
+overflow-x: hidden
+min-height: 100dvh
+color: #e2e2e2
+
+---
+
+## BACKGROUND LAYER
+
+A fixed full-screen div behind all content:
+  background: linear-gradient(135deg, #0a0f1e 0%, #0d2137 100%)
+  position: fixed; inset: 0; z-index: -1; overflow: hidden
+
+Inside it, three glow orbs (position: absolute, border-radius: 50%):
+  filter: blur(100px); opacity: 0.15; pointer-events: none
+  animation: pulse-orb 15s infinite alternate ease-in-out
+
+  Orb 1: 500×500px  #8b5cf6  top: -10%   right: -10%  delay: 0s
+  Orb 2: 600×600px  #3b82f6  bottom: -5% left: -15%   delay: -5s
+  Orb 3: 400×400px  #14b8a6  top: 30%    left: 50%    delay: -10s
+
+@keyframes pulse-orb:
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(5%, 10%) scale(1.1); }
+  100% { transform: translate(-5%, -5%) scale(0.9); }
+
+---
+
+## GLASS PANEL (.glass-panel)
+
+background: rgba(255, 255, 255, 0.08)
+backdrop-filter: blur(24px) saturate(180%)
+-webkit-backdrop-filter: blur(24px) saturate(180%)
+position: relative
+
+---
+
+## GLASS BORDER (.glass-border)
+
+border-top: 1px solid rgba(255, 255, 255, 0.15)
+border-left: 1px solid rgba(255, 255, 255, 0.15)
+border-bottom: 1px solid rgba(255, 255, 255, 0.05)
+border-right: 1px solid rgba(255, 255, 255, 0.05)
+
+---
+
+## GLASS HIGHLIGHT (.glass-highlight::after)
+
+content: ''
+position: absolute
+top: 0; left: 5%; right: 5%; height: 1px
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)
+pointer-events: none
+
+---
+
+## HEADER
+
+position: sticky; top: 0; z-index: 50
+backdrop-filter: blur(24px) — extra strong
+background: rgba(255, 255, 255, 0.05)
+border-bottom: 1px solid rgba(255, 255, 255, 0.10)
+box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25)
+padding: 16px 20px
+display: flex; justify-content: space-between; align-items: center
+
+App name text:
+  font-size: 28px; font-weight: 300; letter-spacing: 0.2em
+  color: #e2e2e2; text-transform: uppercase (or as-is)
+
+---
+
+## MAIN CONTENT AREA
+
+max-width: 375px; margin: 0 auto
+padding: 16px 20px 128px 20px
+display: flex; flex-direction: column; gap: 24px
+
+---
+
+## UNITS TOGGLE
+
+Container:
+  background: rgba(255, 255, 255, 0.10)
+  border-top: 1px solid rgba(255, 255, 255, 0.15)
+  border-left: 1px solid rgba(255, 255, 255, 0.15)
+  border-radius: 9999px
+  padding: 4px
+  width: 96px; height: 36px
+  position: relative
+
+Sliding indicator (absolute child):
+  position: absolute; left: 4px; top: 4px
+  width: 44px; height: 28px
+  background: rgba(255, 255, 255, 0.20)
+  border-radius: 9999px
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+  Active °C: translateX(0)
+  Active °F: translateX(42px)
+
+Buttons:
+  font-size: 12px; font-weight: 600
+  letter-spacing: 0.1em; text-transform: uppercase
+  color: #e2e2e2 (active) / rgba(199,198,205,0.6) (inactive)
+
+---
+
+## SEARCH BAR
+
+height: 56px
+display: flex; align-items: center
+background: rgba(255, 255, 255, 0.08)
+backdrop-filter: blur(24px) saturate(180%)
+border-top: 1px solid rgba(255, 255, 255, 0.15)
+border-left: 1px solid rgba(255, 255, 255, 0.15)
+border-radius: 9999px
+padding: 0 20px; gap: 12px
+box-shadow: 0 10px 40px rgba(0,0,0,0.2)
+focus-within: outline 1px solid rgba(255,255,255,0.20)
+
+Input field:
+  background: transparent; border:
+
+PROMPT 2 : I need the site to have a text suggestion feature in the search bar - it sees what you are tying and it finishes the work in a very subtle but noticable way - this is to be implemented in the search bar itself
+
+
