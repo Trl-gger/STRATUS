@@ -1,3 +1,104 @@
+PRVOTNE PROMPTY: 
+PROMPT 1 : 
+You are a senior prompt engineer - write me a prompt for antigravity to do this whole assignment = Zadanie: Počasie App
+Popis úlohy
+Vytvor aplikáciu zobrazujúcu aktuálne počasie pre hľadané mesto pomocou verejného API s históriou hľadaní.
+Čo aplikácia robí
+Užívateľ zadá:
+
+* Názov mesta (textové pole, napr. "Bratislava", "London")
+* Tlačidlo Hľadaj alebo kláves Enter
+* Prepínač: °C / °F (toggle button)
+Aplikácia zobrazuje:
+
+* Karta s aktuálnym počasím:
+   * Názov mesta a krajiny
+   * Emoji ikona počasia (☀️ 🌧️ ❄️ 🌩️)
+   * Teplota vo vybranej jednotke
+   * Pocitová teplota
+   * Vlhkosť vzduchu (%)
+   * Rýchlosť vetra (km/h)
+   * Textový popis (Jasno / Oblačno / Dážď)
+* Sekcia "Posledné hľadania":
+   * Max. 5 miest ako klikateľné tagy
+   * Klik → znova vyhľadá mesto
+* Stavové hlásenia:
+   * Načítavam... (spinner)
+   * "Mesto sa nenašlo. Skús iný názov."
+   * "Nepodarilo sa načítať dáta. Skontroluj pripojenie."
+Požadované funkcie
+✅ Vyhľadanie mesta (tlačidlo aj Enter) ✅ Zobrazenie počasia cez Open-Meteo API (`fetch` + `async/await`) ✅ Prevod °C ↔ °F bez nového API volania ✅ Emoji ikona podľa WMO kódov počasia ✅ Loading indicator ✅ Ošetrenie chýb (mesto nenájdené, sieť) ✅ História 5 posledných miest (`localStorage`) ✅ Klik na históriu = nové vyhľadanie
+Technológie
+
+* HTML5: Vyhľadávacie pole, karty
+* CSS3: Karty s tieňom, emoji ikony, loading animácia
+* JavaScript (ES6+): `fetch()` API, `async/await`
+* Open-Meteo API: [Dokumentácia](https://open-meteo.com/) (bezplatné, bez registrácie) API endpoint príklad:
+Geocoding: https://geocoding-api.open-meteo.com/v1/search?name=Bratislava Počasie: https://api.open-meteo.com/v1/forecast?latitude=48.14&longitude=17.11&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code
+PROMPT 2 : 
+i have additional requirements - make a new prompt after the old one : Všeobecné pokyny
+🎯 Cieľ projektu
+Pomocou AI nástroja (napr. Claude, ChatGPT, Gemini) vytvoríš kompletnú webovú aplikáciu. AI ti pomôže s dizajnom aj kódom, ale ty ho budeš iteratívne vylepšovať pomocou promptov.
+📦 Čo odovzdáš
+
+1. GitHub repozitár s projektom
+2. Funkčná aplikácia dostupná cez GitHub Pages
+3. Dokumentácia promptov (min. 5 promptov so screenshots alebo `.txt`)
+4. Reflexia (1-2 strany): čo AI vygenerovalo samo, kde si musel zasiahnuť ručne, čo ti robilo problémy
+📁 Štruktúra súborov
+Tvoj projekt MUSÍ dodržať túto štruktúru:
+
+```
+nazov-projektu/
+├── index.html          ← Hlavný HTML súbor
+├── assets/             ← Priečinok pre všetky zdroje
+│   ├── css/
+│   │   └── style.css   ← Všetky CSS štýly
+│   ├── js/
+│   │   └── script.js   ← Všetok JavaScript kód
+│   └── images/         ← Obrázky (ak potrebné)
+│       └── ...
+└── README.md           ← Popis projektu, návod na spustenie
+
+```
+
+Dôležité:
+
+* HTML súbor musí byť v koreňovom priečinku ako `index.html`
+* CSS musí byť v `assets/css/style.css`
+* JavaScript musí byť v `assets/js/script.js`
+* Žiadne súbory priamo v koreňovom priečinku okrem `index.html` a `README.md`
+🌍 GitHub Pages
+Po vytvorení repozitára aktivuj GitHub Pages:
+
+1. Choď do Settings → Pages
+2. V sekcii Source vyber main branch
+3. Ulož → tvoja aplikácia bude dostupná na: `https://tvojegithubmeno.github.io/nazov-projektu/`
+📱 Responzívnosť
+Aplikácia MUSÍ byť responzívna (fungovať na mobile, tablete aj počítači):
+
+* Použi media queries pre rôzne veľkosti obrazoviek
+* Otestuj na minimálne 3 rozlíšeniach: mobil (375px), tablet (768px), desktop (1920px)
+* Prvky sa musia správne zobrazovať a byť použiteľné na všetkých zariadeniach
+🔗 Užitočné odkazy
+
+* AI nástroj na dizajn: [Google Stitch](https://stitch.withgoogle.com/)
+* GitHub Pages návod: [GitHub Docs](https://docs.github.com/en/pages)
+
+PROMPT 3 : 
+
+create a prompt for stitch ai to make a design foe the app - make it have a premium and liquid glass tyle
+
+PROMPT 4 : 
+
+make this css code into styling instructions
+
+
+
+TU SOM SA ROZHODOL ZACAT OD ZNOVU, ALE PRACOVAL SOM S PREDCHODZYMI 
+
+
+
 PROMPT 1 : 
 
 You are a senior prompt engineer and have been tasked with creating a well thought through prompt for a complex responsive weather checking app that is ready to be shipped - here are the instructions : Zadanie: Počasie App
