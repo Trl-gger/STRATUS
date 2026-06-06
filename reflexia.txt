@@ -1,0 +1,12 @@
+Reflexia – Stratus Weather App
+Čo AI vygenerovalo samo
+Väčšinu projektu som vytvoril pomocou AI nástrojov. Google Stitch navrhol celý vizuálny dizajn aplikácie — farebnú paletu, rozloženie a glass morphism efekty. Antigravity následne vygenerovalo funkčný kód vrátane napojenia na Open-Meteo API, logiky vyhľadávania, konverzie teplôt a histórie miest.
+Prečo som použil Antigravity
+Antigravity som si vybral hlavne preto, lebo dokáže pracovať ako človek — sám si otvorí prehliadač, pozrie sa na stránku, spraví screenshot a podľa toho čo vidí pokračuje ďalej. Číta aj konzolu a chyby opravuje sám bez toho, aby som mu musel vysvetľovať čo je zle. To výrazne urýchlilo celý proces tvorby.
+Kde som musel zasiahnuť ručne
+Prvý problém bol, že AI vygenerovalo všetko do jedného súboru namiesto troch samostatných súborov. Musel som kód manuálne rozdeliť do index.html, style.css a script.js.
+Druhý problém bol s mobilným zobrazením — niektoré efekty na mobile nefungovali správne a musel som štýly upraviť ručne.
+Problém s kreditmi
+V polovici projektu mi došli kredity v Antigravity, takže zvyšok štýlovania som musel dokončiť sám priamo v style.css. Zabralo mi to hodinu navyše, no zároveň som sa pri tom naučil viac o tom, ako CSS štýlovanie funguje v praxi.
+Záver
+AI mi výrazne pomohlo a ušetrilo veľa času. Naučil som sa však, že promptom treba zadávať konkrétne inštrukcie — nestačí napísať čo chceš, treba presne vysvetliť ako to má vyzerať a kde to má byť.
