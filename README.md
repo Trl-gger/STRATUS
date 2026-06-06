@@ -1,5 +1,7 @@
 # STRATUS — Weather App
 
+Github Pages - https://trl-gger.github.io/STRATUS/
+
 Aplikácia **STRATUS** je moderná a vizuálne úchvatná webová aplikácia na sledovanie počasia vytvorená od základov s dôrazom na čistý dizajn, plynulé animácie a prvotriedny používateľský zážitok (glassmorphism).
 
 ## Popis aplikácie
