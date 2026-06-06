@@ -1,0 +1,699 @@
+/* ==========================================================================
+   STRATUS — Weather App Style System
+   ========================================================================== */
+
+/* 1. Global Setup & Variables */
+:root {
+  --bg-dark: #0a0f1e;
+  --bg-gradient-end: #0d2137;
+  --color-text: #e2e2e2;
+  --color-text-muted: rgba(255, 255, 255, 0.35);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-bg-hover: rgba(255, 255, 255, 0.12);
+  --glass-border-light: rgba(255, 255, 255, 0.15);
+  --glass-border-dark: rgba(255, 255, 255, 0.05);
+  --accent-purple: #8b5cf6;
+  --accent-blue: #3b82f6;
+  --accent-teal: #14b8a6;
+  --font-main: 'Inter', sans-serif;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.2s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-dark);
+  color: var(--color-text);
+  overflow-x: hidden;
+  min-height: 100dvh;
+  position: relative;
+}
+
+/* 2. Background Layer & Glowing Orbs */
+.bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-gradient-end) 100%);
+  z-index: -1;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
+  mix-blend-mode: screen;
+}
+
+.orb-1 {
+  width: 500px;
+  height: 500px;
+  background: var(--accent-purple);
+  top: -10%;
+  right: -10%;
+  animation: pulse-orb-1 15s infinite alternate ease-in-out;
+}
+
+.orb-2 {
+  width: 600px;
+  height: 600px;
+  background: var(--accent-blue);
+  bottom: -5%;
+  left: -15%;
+  animation: pulse-orb-2 15s infinite alternate ease-in-out;
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent-teal);
+  top: 30%;
+  left: 50%;
+  animation: pulse-orb-3 15s infinite alternate ease-in-out;
+  animation-delay: -10s;
+}
+
+/* Orb Pulse Animations */
+@keyframes pulse-orb-1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-40px, 50px) scale(1.15);
+  }
+}
+
+@keyframes pulse-orb-2 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(50px, -30px) scale(1.1);
+  }
+}
+
+@keyframes pulse-orb-3 {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    transform: translate(-40%, -60%) scale(1.2) rotate(30deg);
+  }
+}
+
+/* 3. Glass Panels & Highlights */
+.glass-panel {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid var(--glass-border-light);
+  border-left: 1px solid var(--glass-border-light);
+  border-bottom: 1px solid var(--glass-border-dark);
+  border-right: 1px solid var(--glass-border-dark);
+}
+
+.glass-panel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  pointer-events: none;
+}
+
+/* 4. Sticky Header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 15, 30, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  height: 72px;
+  display: flex;
+  align-items: center;
+}
+
+.header-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* 5. Main Content Layout */
+.main-content {
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 16px 20px 128px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 6. Search Bar & Inline Autocomplete */
+.search-section {
+  width: 100%;
+}
+
+.search-bar {
+  position: relative;
+  height: 56px;
+  border-radius: 9999px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid var(--glass-border-light);
+  border-left: 1px solid var(--glass-border-light);
+  border-bottom: 1px solid var(--glass-border-dark);
+  border-right: 1px solid var(--glass-border-dark);
+  display: flex;
+  align-items: center;
+  padding: 0 6px 0 24px;
+  transition: box-shadow var(--transition-fast);
+}
+
+.search-bar:focus-within {
+  outline: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+.search-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  pointer-events: none;
+}
+
+.input-wrapper {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+#search-input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-main);
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  position: relative;
+  z-index: 2;
+  padding: 0;
+  margin: 0;
+}
+
+#search-input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Overlay for Ghost Autocomplete */
+.autocomplete-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  font-family: var(--font-main);
+  font-size: 16px;
+  font-weight: 400;
+  z-index: 1;
+  white-space: pre;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.autocomplete-typed {
+  color: transparent;
+  visibility: hidden;
+}
+
+.autocomplete-ghost {
+  color: var(--color-text-muted);
+}
+
+/* Search Button */
+#search-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  z-index: 3;
+}
+
+#search-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+#search-button:active {
+  transform: scale(0.95);
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* 7. Controls Row & °C / °F Toggle */
+.controls-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.toggle-container {
+  width: 96px;
+  height: 36px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.10);
+  padding: 4px;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  pointer-events: none;
+}
+
+.toggle-indicator {
+  width: 44px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.20);
+  border-radius: 9999px;
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: transform var(--transition-smooth);
+  will-change: transform;
+}
+
+/* Slide to °F indicator state */
+.toggle-container.fahrenheit .toggle-indicator {
+  transform: translateX(42px);
+}
+
+.toggle-label {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 2;
+  text-transform: uppercase;
+  transition: color var(--transition-fast);
+}
+
+.toggle-container:not(.fahrenheit) .toggle-label-c,
+.toggle-container.fahrenheit .toggle-label-f {
+  color: #ffffff;
+}
+
+/* 8. Recent Searches Section */
+.recent-searches-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.recent-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.recent-tag {
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.85);
+  transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
+}
+
+.recent-tag:hover {
+  transform: translateY(-2px);
+  background: var(--glass-bg-hover);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.recent-tag:active {
+  transform: translateY(0);
+}
+
+/* 9. Loading Spinner */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 10. Error Panel */
+.error-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.error-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* 11. Weather Card */
+.weather-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid var(--glass-border-light);
+  border-left: 1px solid var(--glass-border-light);
+  border-bottom: 1px solid var(--glass-border-dark);
+  border-right: 1px solid var(--glass-border-dark);
+  border-radius: 24px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.weather-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  pointer-events: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.weather-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.location-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.city-name {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.country-name {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.weather-emoji {
+  font-size: 44px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+
+.weather-temp-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.temp-wrapper {
+  display: flex;
+  align-items: flex-start;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.current-temp {
+  font-size: 72px;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.temp-unit {
+  font-size: 28px;
+  margin-top: 10px;
+  margin-left: 2px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+}
+
+.weather-desc {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: capitalize;
+}
+
+.weather-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-icon-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.detail-icon {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2px;
+}
+
+.detail-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.detail-value .temp-unit {
+  font-size: 13px;
+  margin-top: 0;
+  margin-left: 1px;
+  color: inherit;
+  font-weight: 600;
+}
+
+.wind-unit {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 12. Helper Classes */
+.hidden {
+  display: none !important;
+}
+
+/* 13. Responsiveness (Media Queries) */
+
+/* Mobile (up to 375px or 767px) */
+@media (max-width: 767px) {
+  /* Fits the card layout perfectly */
+}
+
+/* Tablet (768px and up) */
+@media (min-width: 768px) {
+  .main-content {
+    max-width: 520px;
+    padding: 32px 24px 128px;
+    gap: 32px;
+  }
+
+  .logo {
+    font-size: 32px;
+  }
+
+  .city-name {
+    font-size: 28px;
+  }
+
+  .current-temp {
+    font-size: 84px;
+  }
+
+  .weather-desc {
+    font-size: 18px;
+  }
+
+  .detail-value {
+    font-size: 17px;
+  }
+}
+
+/* Desktop (1920px and up / large screens) */
+@media (min-width: 1440px) {
+
+  /* Make the main content still comfortable and readable, centering it */
+  .main-content {
+    max-width: 560px;
+    padding-top: 64px;
+  }
+
+  /* Increase visibility/blur/scaling of animated orbs for background depth */
+  .orb {
+    opacity: 0.18;
+    filter: blur(120px);
+  }
+
+  .orb-1 {
+    width: 600px;
+    height: 600px;
+  }
+
+  .orb-2 {
+    width: 700px;
+    height: 700px;
+  }
+
+  .orb-3 {
+    width: 500px;
+    height: 500px;
+  }
+}

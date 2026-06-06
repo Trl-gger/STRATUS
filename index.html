@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STRATUS — Weather App</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Fixed Background Layer -->
+  <div class="bg-layer">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Sticky Header -->
+  <header class="header">
+    <div class="header-content">
+      <h1 class="logo">STRATUS</h1>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-content">
+
+    <!-- Search Section -->
+    <section class="search-section">
+      <div class="search-bar">
+        <!-- Relative input area for inline autocomplete -->
+        <div class="input-wrapper">
+          <!-- Autocomplete shadow element to align ghost text precisely -->
+          <div class="autocomplete-overlay" aria-hidden="true">
+            <span class="autocomplete-typed"></span><span class="autocomplete-ghost"></span>
+          </div>
+          <!-- Real input -->
+          <input 
+            type="text" 
+            id="search-input" 
+            placeholder="Vyhľadať mesto..." 
+            autocomplete="off" 
+            spellcheck="false"
+          >
+        </div>
+        <button id="search-button" aria-label="Vyhľadať">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Controls Row (Toggle unit) -->
+    <section class="controls-section">
+      <div class="toggle-container" id="unit-toggle" role="button" tabindex="0" aria-label="Prepnúť stupne Celzia a Fahrenheita">
+        <div class="toggle-indicator"></div>
+        <span class="toggle-label toggle-label-c">°C</span>
+        <span class="toggle-label toggle-label-f">°F</span>
+      </div>
+    </section>
+
+    <!-- Recent Searches Tags -->
+    <section class="recent-searches-section">
+      <h2 class="section-title">Nedávne vyhľadávania</h2>
+      <div id="recent-searches" class="recent-tags-container">
+        <!-- Tags will be injected here by Javascript -->
+      </div>
+    </section>
+
+    <!-- State Panels (Loading & Error) -->
+    <section class="status-section">
+      <!-- CSS Spinner Loading State -->
+      <div id="loading-spinner" class="spinner-container hidden">
+        <div class="spinner"></div>
+      </div>
+
+      <!-- Error State -->
+      <div id="error-message" class="error-panel hidden">
+        <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="error-text">Mesto sa nenašlo. Skús iný názov.</span>
+      </div>
+    </section>
+
+    <!-- Weather Card Display -->
+    <section id="weather-section">
+      <!-- Main Glass Card -->
+      <div id="weather-card" class="weather-card hidden">
+        <div class="weather-card-header">
+          <div class="location-info">
+            <h2 id="city-name" class="city-name">Londýn</h2>
+            <span id="country-name" class="country-name">Spojené kráľovstvo</span>
+          </div>
+          <span id="weather-emoji" class="weather-emoji">☀️</span>
+        </div>
+
+        <div class="weather-temp-container">
+          <div class="temp-wrapper">
+            <span id="current-temp" class="current-temp">22</span><span class="temp-unit">°C</span>
+          </div>
+          <p id="weather-desc" class="weather-desc">Jasno</p>
+        </div>
+
+        <div class="weather-details-grid">
+          <!-- Detail: Feels Like -->
+          <div class="detail-item">
+            <div class="detail-icon-title">
+              <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
+              </svg>
+              <span class="detail-title">Pocitovo</span>
+            </div>
+            <div class="detail-value">
+              <span id="feels-like-val">21</span><span class="temp-unit">°C</span>
+            </div>
+          </div>
+
+          <!-- Detail: Humidity -->
+          <div class="detail-item">
+            <div class="detail-icon-title">
+              <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+              </svg>
+              <span class="detail-title">Vlhkosť</span>
+            </div>
+            <div class="detail-value">
+              <span id="humidity-val">64</span>%
+            </div>
+          </div>
+
+          <!-- Detail: Wind Speed -->
+          <div class="detail-item">
+            <div class="detail-icon-title">
+              <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path>
+              </svg>
+              <span class="detail-title">Vietor</span>
+            </div>
+            <div class="detail-value">
+              <span id="wind-val">12</span> <span class="wind-unit">km/h</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Script -->
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
