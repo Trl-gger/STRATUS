@@ -10,3 +10,4 @@ Problém s kreditmi
 V polovici projektu mi došli kredity v Antigravity, takže zvyšok štýlovania som musel dokončiť sám priamo v style.css. Zabralo mi to hodinu navyše, no zároveň som sa pri tom naučil viac o tom, ako CSS štýlovanie funguje v praxi.
 Záver
 AI mi výrazne pomohlo a ušetrilo veľa času. Naučil som sa však, že promptom treba zadávať konkrétne inštrukcie — nestačí napísať čo chceš, treba presne vysvetliť ako to má vyzerať a kde to má byť.
+Ku koncu ma napadlo pridať aj mapu, ktorá bude zobrazovať prehanky vietor atd - nasiel som nejake open source api a momentalne cakam na aktivaciu api klucu.

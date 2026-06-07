@@ -34,6 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let debounceTimeout = null;
   let recentSearches = JSON.parse(localStorage.getItem('stratus_recent') || '[]');
 
+  // Interactive Weather Map State
+  let map = null;
+  let weatherTileLayer = null;
+  let currentMapLayer = 'clouds_new';
+  const OWM_KEY = '4c07525c6e743d7374f5f3674d90e04d';
+
   // 3. WMO Weather Code to Slovak Emoji & Label Mapper
   function mapWmoCode(code) {
     // 0: Jasno
@@ -230,7 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
         windSpeed: current.wind_speed_10m,
         cityName: cityName,
         countryName: countryName,
-        weatherCode: current.weather_code
+        weatherCode: current.weather_code,
+        lat: lat,
+        lon: lon
       };
 
       // Sync UI
@@ -276,6 +284,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     showWeatherCard();
+
+    // Reinitialize map center and markers on successful search/toggle
+    if (rawData && rawData.lat !== undefined && rawData.lon !== undefined) {
+      initMap(rawData.lat, rawData.lon, rawData.cityName, {
+        emoji: wmo.emoji,
+        temp: Math.round(temp),
+        description: wmo.text
+      });
+    }
   }
 
   // 9. °C / °F Unit Toggle sliding behavior
@@ -347,6 +364,88 @@ document.addEventListener('DOMContentLoaded', () => {
       recentSearchesContainer.appendChild(tag);
     });
   }
+
+  // 10a. Interactive Map Functions
+  function initMap(lat, lon, cityName, weatherData) {
+    // Show the map section
+    const mapSection = document.getElementById('map-section');
+    if (mapSection) {
+      mapSection.style.display = 'flex';
+    }
+
+    // If map already exists, remove it and reinitialize
+    if (map) {
+      map.remove();
+      map = null;
+    }
+
+    // Create Leaflet map
+    map = L.map('weather-map', {
+      center: [lat, lon],
+      zoom: 8,
+      zoomControl: true,
+      attributionControl: true
+    });
+
+    // Add base tile layer (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Add weather overlay tile layer
+    addWeatherLayer(currentMapLayer);
+
+    // Add city marker with popup
+    const popupContent = `
+      <strong>${cityName}</strong><br>
+      ${weatherData.emoji} ${weatherData.temp}°${currentUnit}<br>
+      ${weatherData.description}
+    `;
+    
+    L.marker([lat, lon])
+      .addTo(map)
+      .bindPopup(popupContent)
+      .openPopup();
+
+    // Fix Leaflet rendering issue inside hidden containers
+    setTimeout(() => {
+      if (map) {
+        map.invalidateSize();
+      }
+    }, 100);
+  }
+
+  function addWeatherLayer(layerName) {
+    if (weatherTileLayer && map) {
+      map.removeLayer(weatherTileLayer);
+    }
+
+    weatherTileLayer = L.tileLayer(
+      `https://tile.openweathermap.org/map/${layerName}/{z}/{x}/{y}.png?appid=${OWM_KEY}`,
+      { opacity: 0.6, maxZoom: 19 }
+    );
+
+    if (map) {
+      weatherTileLayer.addTo(map);
+    }
+    currentMapLayer = layerName;
+  }
+
+  // Map layer toggle buttons
+  document.querySelectorAll('.map-layer-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!map) return;
+
+      // Remove active class from all buttons, add to clicked
+      document.querySelectorAll('.map-layer-btn')
+        .forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Switch the weather layer
+      addWeatherLayer(btn.dataset.layer);
+    });
+  });
 
   // 11. Initial Startup
   function init() {

@@ -294,4 +294,8 @@ Input field:
 
 PROMPT 2 : I need the site to have a text suggestion feature in the search bar - it sees what you are tying and it finishes the work in a very subtle but noticable way - this is to be implemented in the search bar itself
 
+PROMPT 3 : improve the layout - my main concern right now is the layout of the nedavne vyhladavania and celsius farenheit selector - they should be side by side under the search bart 
+
+PROMPT 4 : make me a prompt again I WANT TO MAKE CHANGESS TO THE STYLING - let it still have elements of liquid glass but i want the colors to be more neutral and id like it to kind of feel like the glass has rain streaks and or droplets on it
+
 

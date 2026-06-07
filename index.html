@@ -8,8 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
 <body>
 
@@ -30,49 +31,55 @@
   <!-- Main Content Wrapper -->
   <main class="main-content">
 
-    <!-- Search Section -->
-    <section class="search-section">
-      <div class="search-bar">
-        <!-- Relative input area for inline autocomplete -->
-        <div class="input-wrapper">
-          <!-- Autocomplete shadow element to align ghost text precisely -->
-          <div class="autocomplete-overlay" aria-hidden="true">
-            <span class="autocomplete-typed"></span><span class="autocomplete-ghost"></span>
+    <!-- Search & Sub-controls Group -->
+    <div class="search-and-controls-group">
+      <!-- Search Section -->
+      <section class="search-section">
+        <div class="search-bar">
+          <!-- Relative input area for inline autocomplete -->
+          <div class="input-wrapper">
+            <!-- Autocomplete shadow element to align ghost text precisely -->
+            <div class="autocomplete-overlay" aria-hidden="true">
+              <span class="autocomplete-typed"></span><span class="autocomplete-ghost"></span>
+            </div>
+            <!-- Real input -->
+            <input 
+              type="text" 
+              id="search-input" 
+              placeholder="Vyhľadať mesto..." 
+              autocomplete="off" 
+              spellcheck="false"
+            >
           </div>
-          <!-- Real input -->
-          <input 
-            type="text" 
-            id="search-input" 
-            placeholder="Vyhľadať mesto..." 
-            autocomplete="off" 
-            spellcheck="false"
-          >
+          <button id="search-button" aria-label="Vyhľadať">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
         </div>
-        <button id="search-button" aria-label="Vyhľadať">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-        </button>
-      </div>
-    </section>
+      </section>
 
-    <!-- Controls Row (Toggle unit) -->
-    <section class="controls-section">
-      <div class="toggle-container" id="unit-toggle" role="button" tabindex="0" aria-label="Prepnúť stupne Celzia a Fahrenheita">
-        <div class="toggle-indicator"></div>
-        <span class="toggle-label toggle-label-c">°C</span>
-        <span class="toggle-label toggle-label-f">°F</span>
-      </div>
-    </section>
+      <!-- Sub-controls (Recent searches & Unit toggle) -->
+      <div class="sub-controls-row">
+        <!-- Recent Searches Tags -->
+        <section class="recent-searches-section">
+          <h2 class="section-title">Nedávne vyhľadávania</h2>
+          <div id="recent-searches" class="recent-tags-container">
+            <!-- Tags will be injected here by Javascript -->
+          </div>
+        </section>
 
-    <!-- Recent Searches Tags -->
-    <section class="recent-searches-section">
-      <h2 class="section-title">Nedávne vyhľadávania</h2>
-      <div id="recent-searches" class="recent-tags-container">
-        <!-- Tags will be injected here by Javascript -->
+        <!-- Controls Row (Toggle unit) -->
+        <section class="controls-section">
+          <div class="toggle-container" id="unit-toggle" role="button" tabindex="0" aria-label="Prepnúť stupne Celzia a Fahrenheita">
+            <div class="toggle-indicator"></div>
+            <span class="toggle-label toggle-label-c">°C</span>
+            <span class="toggle-label toggle-label-f">°F</span>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
 
     <!-- State Panels (Loading & Error) -->
     <section class="status-section">
@@ -153,9 +160,33 @@
         </div>
       </div>
     </section>
+ 
+    <!-- Map Section -->
+    <section id="map-section" style="display: none;">
+      <h3 class="section-label">MAPA POČASIA</h3>
+      <div id="weather-map"></div>
+      
+      <!-- Map layer toggle pills -->
+      <div id="map-controls">
+        <button class="map-layer-btn active" data-layer="clouds_new">
+          ☁️ Oblačnosť
+        </button>
+        <button class="map-layer-btn" data-layer="precipitation_new">
+          🌧️ Zrážky
+        </button>
+        <button class="map-layer-btn" data-layer="wind_new">
+          💨 Vietor
+        </button>
+        <button class="map-layer-btn" data-layer="temp_new">
+          🌡️ Teplota
+        </button>
+      </div>
+    </section>
 
   </main>
-
+ 
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <!-- Script -->
   <script src="assets/js/script.js"></script>
 </body>
